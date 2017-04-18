@@ -3,8 +3,23 @@
 use function Deployer\set;
 use function Deployer\get;
 
-set('local_src', dirname(__DIR__));
-set('rsync_src', get('local_src'));
+set('local_src', function () {
+    // Initial path outside vendor
+    $path     = __DIR__ . '/../../../../';
+    $maxDepth = 2;
+
+    // Step back through dirs until we find deploy.php
+    while (!file_exists($path . 'deploy.php') || $maxDepth) {
+        $path .= '../';
+        $maxDepth--;
+    }
+
+    if (file_exists($path . 'deploy.php')) {
+        return $path;
+    }
+
+    throw new \RuntimeException('Could not locate project root');
+});
 
 set('locales', ['en_GB', 'en_US']);
 
@@ -22,6 +37,7 @@ set('writable_dirs', [
     'pub/static',
 ]);
 
+set('rsync_src', get('local_src'));
 set('rsync', [
     'exclude'       => [
         '/.docker',
