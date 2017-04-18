@@ -4,30 +4,30 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "460a84bba3742b70e0859d19b292cfe5",
+    "content-hash": "3ee0e933f5fddb07bae37fee7449d3bc",
     "packages": [
         {
             "name": "deployer/recipes",
-            "version": "dev-master",
+            "version": "4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/deployphp/recipes.git",
-                "reference": "4b8dfe4eddc707416ac9d7ab650bd00e42b30b17"
+                "reference": "4811488d2f210e5d93e874d9615aea8b58dc3aa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deployphp/recipes/zipball/4b8dfe4eddc707416ac9d7ab650bd00e42b30b17",
-                "reference": "4b8dfe4eddc707416ac9d7ab650bd00e42b30b17",
+                "url": "https://api.github.com/repos/deployphp/recipes/zipball/4811488d2f210e5d93e874d9615aea8b58dc3aa2",
+                "reference": "4811488d2f210e5d93e874d9615aea8b58dc3aa2",
                 "shasum": ""
             },
             "replace": {
-                "deployer/recipes": "self.version"
+                "deployphp/recipes": "self.version"
             },
             "type": "library",
-            "autoload": {
-                "files": [
-                    "autoload.php"
-                ]
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -35,35 +35,48 @@
             ],
             "authors": [
                 {
+                    "name": "Samuel Gordalina",
+                    "email": "samuel.gordalina@gmail.com",
+                    "homepage": "https://gordalina.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Tomas Majer",
+                    "email": "tomasmajer@gmail.com",
+                    "homepage": "http://tomaj.sk",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "Hubert Kowalski",
+                    "email": "h.kowalski@hakger.pl",
+                    "homepage": "https://hakger.pl",
+                    "role": "Contributor"
+                },
+                {
                     "name": "Anton Medvedev",
-                    "email": "anton@medv.io"
+                    "email": "anton@medv.io",
+                    "homepage": "http://medv.io",
+                    "role": "Contributor"
                 }
             ],
             "description": "3rd party deployer recipes",
             "homepage": "https://github.com/deployphp/recipes",
             "keywords": [
                 "cachetool",
-                "cloudflare",
                 "deploy",
                 "deployer",
                 "deployment",
-                "hipchat",
                 "newrelic",
-                "rabbit",
                 "recipes",
-                "sentry",
-                "slack",
-                "yarn"
+                "slack"
             ],
-            "time": "2017-04-10 14:16:56"
+            "time": "2017-03-27T16:28:47+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "deployer/recipes": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

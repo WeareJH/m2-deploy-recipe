@@ -4,6 +4,6 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "deployer/recipes": "dev-master"
+        "deployer/recipes": "^4.0"
     }
 }
