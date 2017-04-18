@@ -7,7 +7,7 @@
 Use `bamarni/composer-bin-plugin` to pull in the required Deployer libs without impacted the project dependencies.
 
 ```
-$ composer require bamarni/composer-bin-plugin ^1.1
+$ workflow composer-require bamarni/composer-bin-plugin
 ```
 
 Add the following snippet to your `composer.json` `scripts` block
