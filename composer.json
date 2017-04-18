@@ -1,0 +1,9 @@
+{
+    "name": "wearejh/m2-deploy-recipe",
+    "description": "Deployer Recipe for Magento 2",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "deployer/recipes": "dev-master"
+    }
+}
