@@ -5,5 +5,10 @@
     "license": "MIT",
     "require": {
         "deployer/recipes": "^4.0"
+    },
+    "autoload": {
+        "files": [
+            "autoload.php"
+        ]
     }
 }

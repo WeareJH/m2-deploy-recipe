@@ -1,27 +1,12 @@
 <?php
 
-use function Deployer\set;
-use function Deployer\get;
+namespace Deployer;
 
-set('local_src', function () {
-    // Initial path outside vendor
-    $path     = __DIR__ . '/../../../../';
-    $maxDepth = 2;
-
-    // Step back through dirs until we find deploy.php
-    while (!file_exists($path . 'deploy.php') || $maxDepth) {
-        $path .= '../';
-        $maxDepth--;
-    }
-
-    if (file_exists($path . 'deploy.php')) {
-        return $path;
-    }
-
-    throw new \RuntimeException('Could not locate project root');
-});
+set('local_src', '/root/build');
 
 set('locales', ['en_GB', 'en_US']);
+
+set('composer_options', '-o --no-dev --prefer-dist');
 
 set('shared_dirs', [
     'var/log',
@@ -79,3 +64,7 @@ set('rsync', [
     'options'       => ['delete'],
     'timeout'       => 3600,
 ]);
+
+set('local_bin/php', function () {
+    return runLocally('which php')->toString();
+});
