@@ -1,6 +1,6 @@
-<?php
+***REMOVED***
 
-namespace Deployer;
+***REMOVED***
 
 desc('Install Magento Instance');
 task('magento:install', function () {
