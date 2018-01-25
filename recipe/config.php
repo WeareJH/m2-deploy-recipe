@@ -66,5 +66,5 @@ set('rsync', [
 ]);
 
 set('local_bin/php', function () {
-    return runLocally('which php')->toString();
+    return runLocally('which php');
 });
