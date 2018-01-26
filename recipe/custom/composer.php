@@ -13,5 +13,5 @@ set('local_bin/composer', function () {
 
 desc('Installing composer dependencies locally');
 task('composer:local:install', function () {
-    runLocally('cd {{local_src}} && {{local_bin/composer}} {{composer_options}}');
+    runLocally('cd {{local_src}} && {{local_bin/composer}} install {{composer_options}}');
 });
