@@ -14,6 +14,7 @@ require __DIR__ . '/custom/magento2.php';
 require __DIR__ . '/custom/magentoInstall.php';
 // Other Custom Commands
 require __DIR__ . '/custom/composer.php';
+require __DIR__ . '/custom/ssh.php';
 
 desc('Deploy files to server');
 task('deploy', [
