@@ -31,9 +31,7 @@ set('rsync', [
         '/.dockerignore',
         '/.git',
         '/.gitignore',
-        '/.deploy',
         '/deploy.php',
-        '/vendor-bin',
         '/dev',
         '/test',
         '/phpserver',
@@ -60,7 +58,7 @@ set('rsync', [
     'filter'        => [],
     'filter-file'   => false,
     'filter-perdir' => false,
-    'flags'         => 'rzcEL',
+    'flags'         => 'rzL',
     'options'       => ['delete'],
     'timeout'       => 3600,
 ]);
