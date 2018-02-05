@@ -56,7 +56,7 @@ task('release:upgrade', [
 ]);
 
 desc('Upgrade db backup & release');
-task('release:upgrade', [
+task('release:backup', [
     'deploy:lock',
     'deploy:shared',
     'deploy:writable',
