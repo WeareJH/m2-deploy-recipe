@@ -35,7 +35,6 @@ task('release:atomic', [
     'deploy:shared',
     'deploy:writable',
     'deploy:clear_paths',
-    'deploy:magento:atomic',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
