@@ -8,6 +8,10 @@ set('locales', ['en_GB', 'en_US']);
 
 set('composer_options', '-o --no-dev --prefer-dist');
 
+set('shared_files', [
+   'app/etc/env.php'
+]);
+
 set('shared_dirs', [
     'var/log',
     'var/report',
