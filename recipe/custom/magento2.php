@@ -32,7 +32,7 @@ task('magento:setup:backup:db', function () {
 
 desc('Flush cache');
 task('magento:cache:flush', function () {
-    run('{{bin/php}} {{release_path}}/bin/magento setup:di:compile');
+    run('{{bin/php}} {{release_path}}/bin/magento cache:flush');
 });
 
 desc('Enable maintenance mode');
