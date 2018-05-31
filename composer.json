@@ -4,6 +4,12 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "deployer/recipes": "^4.0"
+        "deployer/deployer": "^6.0",
+        "deployer/recipes": "^6.0"
+    },
+    "autoload": {
+        "files": [
+            "autoload.php"
+        ]
     }
 }

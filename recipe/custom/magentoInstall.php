@@ -1,12 +1,6 @@
 <?php
 
-use function Deployer\after;
-use function Deployer\ask;
-use function Deployer\askConfirmation;
-use function Deployer\desc;
-use function Deployer\run;
-use function Deployer\task;
-use function Deployer\writeln;
+namespace Deployer;
 
 desc('Install Magento Instance');
 task('magento:install', function () {
@@ -60,5 +54,3 @@ task('magento:install', function () {
     writeln('<info>Running Installation...</info>');
     run(preg_replace($regex, '', $command));
 });
-
-after('magento:install', 'magento:deploy:mode:set:production');
