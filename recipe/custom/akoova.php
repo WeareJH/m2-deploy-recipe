@@ -2,10 +2,6 @@
 
 namespace Deployer;
 
-use Symfony\Component\Console\Input\InputOption;
-
-option('tag', null, InputOption::VALUE_OPTIONAL, 'Tag used for Akoova rollback');
-
 desc('Touch file to start deployment on Akoova');
 task('akoova:trigger:deploy', function () {
     run('touch /trigger/deploy-{{ bundle_name }}');
