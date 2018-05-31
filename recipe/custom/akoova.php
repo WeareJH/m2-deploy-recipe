@@ -2,28 +2,41 @@
 
 namespace Deployer;
 
-set('akoova_tmp_extract_path', sys_get_temp_dir() . '/akoova_build');
+use Symfony\Component\Console\Input\InputOption;
 
-$deployName = get('akoova_deploy_name');
-set('akoova_zip_file', sys_get_temp_dir() . "/{$deployName}.zip");
-
-desc('Extract release tarball to convert to zip');
-
-task('akoova:tarball:extract', function () {
-    runLocally('mkdir -p {{ akoova_tmp_extract_path }} && cd {{ akoova_tmp_extract_path }} && tar -xzf {{ zip_path }}');
-});
-
-desc('Generate release zip for Akoova');
-task('akoova:zip:create', function () {
-    runLocally('cd {{ akoova__tmp_extract_path }} && zip -u -1 -r {{ akoova_zip_file }} .htaccess * -x .git');
-});
-
-desc('Upload release zip to Akoova manager');
-task('akoova:zip:upload', function () {
-    runLocally('scp -P {{ port }} {{ akoova_zip_file }} {{ user }}@{{ host }}:{{ deploy_path }}');
-});
+option('tag', null, InputOption::VALUE_OPTIONAL, 'Tag used for Akoova rollback');
 
 desc('Touch file to start deployment on Akoova');
-task('akoova:trigger:create', function () {
-    runLocally('ssh -p {{ port }} {{ user }}@{{ host }} touch {{ deploy_path }}/deploy-{{ akoova_deploy_name }}.zip');
+task('akoova:trigger:deploy', function () {
+    run('touch /trigger/deploy-{{ bundle_name }}');
+});
+
+desc('Touch file to start rollback on Akoova');
+task('akoova:trigger:rollback', function () {
+    if (!input()->hasOption('tag')) {
+        throw new \RuntimeException(
+            'Rollback requires "--tag" option to be defined, provided by Akoova on deployment, e.g. --tag="1.0.0.0"'
+        );
+    }
+
+    $rollbackTag = input()->getOption('tag');
+    run('touch /trigger/rollback-' . $rollbackTag);
+});
+
+set('deploy_status_wait', 180);
+
+desc('Poll for deployment status');
+task('akoova:deploy:status', function () {
+    $wait = get('deploy_status_wait');
+    $time = time();
+
+    while (time() - $time < $wait) {
+        // Checks for the removal of deploy trigger
+        if (test('[ ! -f /trigger/deploy-{{ bundle_name }} ]')) {
+            return true;
+        }
+        sleep(10);
+    }
+
+    throw new \RuntimeException('Gave up waiting after "'. $wait .' seconds"  - presumed failed.');
 });

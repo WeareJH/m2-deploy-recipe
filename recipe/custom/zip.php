@@ -5,7 +5,12 @@ namespace Deployer;
 use Deployer\Ssh\Arguments;
 use Deployer\Task\Context;
 
-set('zip_path', sys_get_temp_dir() . '/deploy.tgz');
+set('bundle_name', function () {
+    $rev = runLocally('git rev-parse HEAD');
+    return $rev . '.tgz';
+});
+
+set('zip_path', sys_get_temp_dir() . '/{{bundle_name}}');
 
 task('deploy:zip:create', function () {
     runLocally('cd {{local_src}} && tar -czf {{zip_path}} .');
@@ -22,5 +27,5 @@ task('deploy:zip:upload', function () {
 });
 
 task('deploy:zip:unzip', function () {
-    run('cd {{release_path}} && tar -xzf deploy.tgz && rm deploy.tgz');
+    run('cd {{release_path}} && tar -xzf deploy.tgz && rm {{bundle_name}}');
 });
