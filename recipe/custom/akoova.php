@@ -4,7 +4,7 @@ namespace Deployer;
 
 desc('Touch file to start deployment on Akoova');
 task('akoova:trigger:deploy', function () {
-    run('touch /trigger/deploy-{{ bundle_name }}');
+    run('touch {{ deploy_path }}/deploy-{{ bundle_name }}');
 });
 
 desc('Touch file to start rollback on Akoova');
@@ -16,7 +16,7 @@ task('akoova:trigger:rollback', function () {
     }
 
     $rollbackTag = input()->getOption('tag');
-    run('touch /trigger/rollback-' . $rollbackTag);
+    run('touch {{ deploy_path }}/rollback-' . $rollbackTag);
 });
 
 set('deploy_status_wait', 180);
@@ -28,7 +28,7 @@ task('akoova:deploy:status', function () {
 
     while (time() - $time < $wait) {
         // Checks for the removal of deploy trigger
-        if (test('[ ! -f /trigger/deploy-{{ bundle_name }} ]')) {
+        if (test('[ ! -f {{ deploy_path }}/deploy-{{ bundle_name }} ]')) {
             return true;
         }
         sleep(10);
