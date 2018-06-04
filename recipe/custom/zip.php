@@ -12,8 +12,14 @@ set('bundle_name', function () {
 
 set('zip_path', sys_get_temp_dir() . '/{{bundle_name}}');
 
+set('exclusions', function () {
+    return array_map(function ($exclusion) {
+        return sprintf('--exclude="%s"', $exclusion);
+    }, get('build_exclusions'));
+});
+
 task('deploy:zip:create', function () {
-    runLocally('cd {{local_src}} && tar -czf {{zip_path}} .');
+    runLocally('cd {{local_src}} && tar {{exclusions}} -czf {{zip_path}} .');
 });
 
 task('deploy:zip:upload', function () {
