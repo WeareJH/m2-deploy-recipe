@@ -13,9 +13,9 @@ set('bundle_name', function () {
 set('zip_path', sys_get_temp_dir() . '/{{bundle_name}}');
 
 set('exclusions', function () {
-    return array_map(function ($exclusion) {
+    return implode(' ', array_map(function ($exclusion) {
         return sprintf('--exclude="%s"', $exclusion);
-    }, get('build_exclusions'));
+    }, get('build_exclusions')));
 });
 
 task('deploy:zip:create', function () {
