@@ -5,14 +5,29 @@ namespace Deployer;
 use Deployer\Ssh\Arguments;
 use Deployer\Task\Context;
 
+task('test:ssh', function () {
+    $server = Context::get()->getHost();
+   var_dump($server->getSshArguments()->withMultiplexing($server)->getCliArguments());
+});
+
 task('akoova:zip:upload', function () {
     $server = Context::get()->getHost();
     $sshPort = $server->getPort();
-    $controlPath = $server->isMultiplexing()
+    $serverArgs = $server->getSshArguments();
+
+    $arguments = $server->isMultiplexing()
         ? '-o ControlPath=' . (new Arguments())->withMultiplexing($server)->getOption('ControlPath')
         : '';
 
-    runLocally("scp -P $sshPort $controlPath {{zip_path}} $server:{{deploy_path}}");
+    if ($strictHostKeyChecking = $serverArgs->getOption('StrictHostKeyChecking')) {
+        $arguments .= sprintf(' -o StrictHostKeyChecking=%s', $strictHostKeyChecking);
+    }
+
+    if ($userKnownHostsFile = $serverArgs->getOption('UserKnownHostsFile')) {
+        $arguments .= sprintf(' -o UserKnownHostsFile=%s', $userKnownHostsFile);
+    }
+
+    runLocally("scp -P $sshPort $arguments {{zip_path}} $server:{{deploy_path}}");
 });
 
 desc('Touch file to start deployment on Akoova');

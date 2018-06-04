@@ -22,14 +22,24 @@ task('deploy:zip:create', function () {
     runLocally('cd {{local_src}} && tar {{exclusions}} -czf {{zip_path}} .');
 });
 
-task('deploy:zip:upload', function () {
+task('akoova:zip:upload', function () {
     $server = Context::get()->getHost();
     $sshPort = $server->getPort();
-    $controlPath = $server->isMultiplexing()
+    $serverArgs = $server->getSshArguments();
+
+    $arguments = $server->isMultiplexing()
         ? '-o ControlPath=' . (new Arguments())->withMultiplexing($server)->getOption('ControlPath')
         : '';
 
-    runLocally("scp -P $sshPort $controlPath {{zip_path}} $server:{{release_path}}");
+    if ($strictHostKeyChecking = $serverArgs->getOption('StrictHostKeyChecking')) {
+        $arguments .= sprintf(' -o StrictHostKeyChecking=%s', $strictHostKeyChecking);
+    }
+
+    if ($userKnownHostsFile = $serverArgs->getOption('UserKnownHostsFile')) {
+        $arguments .= sprintf(' -o UserKnownHostsFile=%s', $userKnownHostsFile);
+    }
+
+    runLocally("scp -P $sshPort $arguments {{zip_path}} $server:{{release_path}}");
 });
 
 task('deploy:zip:unzip', function () {
