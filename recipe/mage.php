@@ -45,7 +45,7 @@ task('deploy', [ 'sonassi' ]);
 
 desc('Deploy release to akoova server');
 task('akoova', [
-    'deploy:zip:upload',
+    'akoova:zip:upload',
     'akoova:trigger:deploy',
     'akoova:deploy:status',
     'success'

@@ -2,6 +2,16 @@
 
 namespace Deployer;
 
+task('akoova:zip:upload', function () {
+    $server = Context::get()->getHost();
+    $sshPort = $server->getPort();
+    $controlPath = $server->isMultiplexing()
+        ? '-o ControlPath=' . (new Arguments())->withMultiplexing($server)->getOption('ControlPath')
+        : '';
+
+    runLocally("scp -P $sshPort $controlPath {{zip_path}} $server:{{deploy_path}}");
+});
+
 desc('Touch file to start deployment on Akoova');
 task('akoova:trigger:deploy', function () {
     run('touch {{ deploy_path }}/deploy-{{ bundle_name }}');
