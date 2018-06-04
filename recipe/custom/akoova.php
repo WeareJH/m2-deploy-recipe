@@ -2,6 +2,9 @@
 
 namespace Deployer;
 
+use Deployer\Ssh\Arguments;
+use Deployer\Task\Context;
+
 task('akoova:zip:upload', function () {
     $server = Context::get()->getHost();
     $sshPort = $server->getPort();
