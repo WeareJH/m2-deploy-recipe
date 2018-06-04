@@ -21,6 +21,7 @@ require __DIR__ . '/custom/akoova.php';
 
 desc('Build Magento 2 production assets');
 task('build', [
+    'composer:local:install',
     'magento:local:setup:static-content:deploy',
     'magento:local:setup:di:compile'
 ]);
