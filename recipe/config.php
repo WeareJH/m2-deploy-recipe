@@ -27,8 +27,11 @@ set('writable_dirs', [
 ]);
 
 set('build_exclusions', [
+    './.DS_Store',
     './.git',
+    './.gitignore',
     './.docker',
+    './.dockerignore',
     './.circleci',
     './.user.ini',
     './.travis.yml',
@@ -48,6 +51,7 @@ set('build_exclusions', [
     './env.sample.php',
     './phpunit.xml',
     './phpcs.xml',
+    './.php_cs.dist',
     './tsconfig.json',
     './tslint.json',
     './crossbow.yaml',
