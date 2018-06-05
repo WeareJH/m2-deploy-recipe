@@ -43,5 +43,5 @@ task('deploy:zip:upload', function () {
 });
 
 task('deploy:zip:unzip', function () {
-    run('cd {{release_path}} && tar -xzf deploy.tgz && rm {{bundle_name}}');
+    run('cd {{release_path}} && tar -xzf {{bundle_name}} && rm {{bundle_name}}');
 });
