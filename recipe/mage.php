@@ -17,21 +17,41 @@ require __DIR__ . '/custom/magentoInstall.php';
 // Other Custom Commands
 require __DIR__ . '/custom/composer.php';
 require __DIR__ . '/custom/ssh.php';
+require __DIR__ . '/custom/akoova.php';
 
-desc('Deploy files to server');
-task('deploy', [
+desc('Build Magento 2 production assets');
+task('build', [
     'composer:local:install',
     'magento:local:setup:static-content:deploy',
-    'magento:local:setup:di:compile',
+    'magento:local:setup:di:compile'
+]);
+
+desc('Bundle Magento 2 into tarball');
+task('bundle', [
+    'deploy:zip:create'
+]);
+
+desc('Deploy release to sonassi server');
+task('sonassi', [
     'deploy:prepare',
     'deploy:lock',
-    'deploy:release',
-    'deploy:zip:create',
     'deploy:zip:upload',
     'deploy:zip:unzip',
     'deploy:unlock',
     'success'
 ]);
+
+desc('Deploy files to server [deprecated, use the sonassi task]');
+task('deploy', [ 'sonassi' ]);
+
+desc('Deploy release to akoova server');
+task('akoova', [
+    'akoova:zip:upload',
+    'akoova:trigger:deploy',
+    'akoova:deploy:status',
+    'success'
+]);
+
 
 desc('Atomic release');
 task('release:atomic', [

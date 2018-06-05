@@ -26,6 +26,39 @@ set('writable_dirs', [
     'pub/static',
 ]);
 
+set('build_exclusions', [
+    './.DS_Store',
+    './.git',
+    './.gitignore',
+    './.docker',
+    './.dockerignore',
+    './.circleci',
+    './.user.ini',
+    './.travis.yml',
+    './.php_cs',
+    './.htaccess*',
+    './.phpstorm.meta.php',
+    './*.sample',
+    './*.md',
+    './auth.json',
+    './dev',
+    './phpserver',
+    './LICENSE*.txt',
+    './COPYING.txt',
+    './deploy.php',
+    './docker-compose.*',
+    './restore.sh',
+    './env.sample.php',
+    './phpunit.xml',
+    './phpcs.xml',
+    './.php_cs.dist',
+    './tsconfig.json',
+    './tslint.json',
+    './crossbow.yaml',
+    './fe',
+    './node_modules'
+]);
+
 set('local_bin/php', function () {
     return runLocally('which php');
 });
