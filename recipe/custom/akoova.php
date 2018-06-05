@@ -5,11 +5,6 @@ namespace Deployer;
 use Deployer\Ssh\Arguments;
 use Deployer\Task\Context;
 
-task('test:ssh', function () {
-    $server = Context::get()->getHost();
-   var_dump($server->getSshArguments()->withMultiplexing($server)->getCliArguments());
-});
-
 task('akoova:zip:upload', function () {
     $server = Context::get()->getHost();
     $sshPort = $server->getPort();

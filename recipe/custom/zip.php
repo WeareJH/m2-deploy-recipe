@@ -22,7 +22,7 @@ task('deploy:zip:create', function () {
     runLocally('cd {{local_src}} && tar {{exclusions}} -czf {{zip_path}} .');
 });
 
-task('akoova:zip:upload', function () {
+task('deploy:zip:upload', function () {
     $server = Context::get()->getHost();
     $sshPort = $server->getPort();
     $serverArgs = $server->getSshArguments();
