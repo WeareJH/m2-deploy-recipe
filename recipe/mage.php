@@ -35,6 +35,7 @@ desc('Deploy release to sonassi server');
 task('sonassi', [
     'deploy:prepare',
     'deploy:lock',
+    'deploy:release',
     'deploy:zip:upload',
     'deploy:zip:unzip',
     'deploy:unlock',
