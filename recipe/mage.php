@@ -18,12 +18,14 @@ require __DIR__ . '/custom/magentoInstall.php';
 require __DIR__ . '/custom/composer.php';
 require __DIR__ . '/custom/ssh.php';
 require __DIR__ . '/custom/akoova.php';
+require __DIR__ . '/custom/symlinks.php';
 
 desc('Build Magento 2 production assets');
 task('build', [
     'composer:local:install',
     'magento:local:setup:static-content:deploy',
-    'magento:local:setup:di:compile'
+    'magento:local:setup:di:compile',
+    'symlinks:local:create'
 ]);
 
 desc('Bundle Magento 2 into tarball');

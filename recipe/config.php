@@ -8,6 +8,10 @@ set('locales', ['en_GB', 'en_US']);
 
 set('composer_options', '-o --no-dev --prefer-dist');
 
+// Key, Value = Source, Destination
+// E.g ['.' => 'pub/eu'] to symlink pub to pub/eu for multistore
+set('symlinks', []);
+
 set('shared_files', [
    'app/etc/env.php'
 ]);
