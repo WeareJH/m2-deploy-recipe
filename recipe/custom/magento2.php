@@ -25,6 +25,11 @@ task('magento:setup:upgrade', function () {
     run('{{bin/php}} {{release_path}}/bin/magento setup:upgrade');
 });
 
+desc('Setup upgrade keep generated');
+task('magento:setup:upgrade:keep-generated', function () {
+    run('{{bin/php}} {{release_path}}/bin/magento setup:upgrade --keep-generated');
+});
+
 desc('Setup backup db');
 task('magento:setup:backup:db', function () {
     run('{{bin/php}} {{release_path}}/bin/magento setup:backup --db');
