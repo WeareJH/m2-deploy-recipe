@@ -42,11 +42,9 @@ task('akoova:trigger:rollback', function () {
     run('touch {{ deploy_path }}/rollback-' . $rollbackTag);
 });
 
-set('deploy_status_wait', 180);
-
 desc('Poll for deployment status');
 task('akoova:deploy:status', function () {
-    $wait = get('deploy_status_wait');
+    $wait = get('deploy_status_wait', 180);
     $time = time();
 
     while (time() - $time < $wait) {
