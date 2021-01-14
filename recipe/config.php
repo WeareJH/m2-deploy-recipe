@@ -5,6 +5,7 @@ namespace Deployer;
 set('local_src', '/root/build');
 
 set('locales', ['en_GB', 'en_US']);
+set('themes_to_exclude', []);
 
 set('composer_options', '-o --no-dev --prefer-dist');
 

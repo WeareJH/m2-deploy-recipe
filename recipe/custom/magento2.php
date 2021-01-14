@@ -7,9 +7,14 @@ namespace Deployer;
 desc('Local deploy static assets');
 task('magento:local:setup:static-content:deploy', function () {
     $locales = get('locales') ?: [];
+    $excludeThemes = array_map(function ($theme) {
+        return "--exclude-theme $theme";
+    }, get('themes_to_exclude') ?: []);
+
     runLocally(sprintf(
-        '{{local_bin/php}} {{local_src}}/bin/magento setup:static-content:deploy -f %s',
-        implode(' ', $locales)
+        '{{local_bin/php}} {{local_src}}/bin/magento setup:static-content:deploy -f %s %s',
+        implode(' ', $locales),
+        implode(' ', $excludeThemes)
     ));
 });
 
