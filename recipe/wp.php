@@ -3,7 +3,7 @@
 namespace Deployer;
 
 require 'recipe/common.php';
-require 'recipe/rsync.php';
+require 'contrib/rsync.php';
 
 // Config
 require __DIR__ . '/config/wp.php';
