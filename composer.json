@@ -4,7 +4,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "deployer/deployer": "v7.0.0-beta.40"
+        "deployer/deployer": "dev-master"
     },
     "autoload": {
         "files": [
