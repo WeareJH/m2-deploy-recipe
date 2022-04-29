@@ -4,8 +4,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "deployer/deployer": "^6.0",
-        "deployer/recipes": "^6.0"
+        "deployer/deployer": "v7.0.0-beta.40"
     },
     "autoload": {
         "files": [
