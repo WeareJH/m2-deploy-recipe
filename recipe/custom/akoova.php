@@ -8,18 +8,14 @@ use Deployer\Task\Context;
 task('akoova:zip:upload', function () {
     $server = Context::get()->getHost();
     $sshPort = $server->getPort();
-    $serverArgs = $server->getSshArguments();
+    $serverArgs = (array) $server->getSshArguments();
 
-    $arguments = $server->isMultiplexing()
-        ? '-o ControlPath=' . (new Arguments())->withMultiplexing($server)->getOption('ControlPath')
+    $arguments = $server->getSshMultiplexing()
+        ? '-o ControlPath=' . $server->getSshControlPath()
         : '';
 
-    if ($strictHostKeyChecking = $serverArgs->getOption('StrictHostKeyChecking')) {
-        $arguments .= sprintf(' -o StrictHostKeyChecking=%s', $strictHostKeyChecking);
-    }
-
-    if ($userKnownHostsFile = $serverArgs->getOption('UserKnownHostsFile')) {
-        $arguments .= sprintf(' -o UserKnownHostsFile=%s', $userKnownHostsFile);
+    foreach ($serverArgs as $serverArg) {
+        $arguments .= sprintf(' %s', $serverArg);
     }
 
     runLocally("scp -P $sshPort $arguments {{zip_path}} $server:{{deploy_path}}");
