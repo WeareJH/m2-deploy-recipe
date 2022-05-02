@@ -14,6 +14,7 @@ require __DIR__ . '/custom/composer.php';
 require __DIR__ . '/custom/ssh.php';
 require __DIR__ . '/custom/akoova.php';
 require __DIR__ . '/custom/symlinks.php';
+require __DIR__ . '/custom/prepare.php';
 
 desc('Build WordPress assets');
 task('build', [
