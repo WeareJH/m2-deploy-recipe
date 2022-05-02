@@ -7,6 +7,7 @@ use Deployer\Task\Context;
 
 task('akoova:zip:upload', function () {
     $server = Context::get()->getHost();
+    $sshUser = $server->getRemoteUser();
     $sshPort = $server->getPort();
     $serverArgs = (array) $server->getSshArguments();
 
@@ -18,7 +19,7 @@ task('akoova:zip:upload', function () {
         $arguments .= sprintf(' %s', $serverArg);
     }
 
-    runLocally("scp -P $sshPort $arguments {{zip_path}} $server:{{deploy_path}}");
+    runLocally("scp -P $sshPort $arguments {{zip_path}} $sshUser@$server:{{deploy_path}}");
 });
 
 desc('Touch file to start deployment on Akoova');

@@ -24,6 +24,7 @@ task('deploy:zip:create', function () {
 
 task('deploy:zip:upload', function () {
     $server = Context::get()->getHost();
+    $sshUser = $server->getRemoteUser();
     $sshPort = $server->getPort();
     $serverArgs = (array) $server->getSshArguments();
 
@@ -35,7 +36,7 @@ task('deploy:zip:upload', function () {
         $arguments .= sprintf(' %s', $serverArg);
     }
 
-    runLocally("scp -P $sshPort $arguments {{zip_path}} $server:{{release_path}}");
+    runLocally("scp -P $sshPort $arguments {{zip_path}} $sshUser@$server:{{release_path}}");
 });
 
 task('deploy:zip:unzip', function () {
