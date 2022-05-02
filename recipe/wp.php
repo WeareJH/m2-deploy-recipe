@@ -34,7 +34,7 @@ task('sonassi', [
     'deploy:zip:upload',
     'deploy:zip:unzip',
     'deploy:unlock',
-    'success'
+    'deploy:success'
 ]);
 
 desc('Deploy files to server [deprecated, use the sonassi task]');
@@ -45,7 +45,7 @@ task('akoova', [
     'akoova:zip:upload',
     'akoova:trigger:deploy',
     'akoova:deploy:status',
-    'success'
+    'deploy:success'
 ]);
 
 desc('Atomic release');
@@ -57,7 +57,7 @@ task('release:atomic', [
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
-    'success'
+    'deploy:success'
 ]);
 
 desc('Upgrade release');
@@ -69,7 +69,7 @@ task('release:upgrade', [
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
-    'success'
+    'deploy:success'
 ]);
 
 desc('Upgrade db backup & release');
@@ -81,7 +81,7 @@ task('release:backup', [
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
-    'success'
+    'deploy:success'
 ]);
 
 after('deploy:failed', 'deploy:unlock');
