@@ -2,7 +2,6 @@
 
 namespace Deployer;
 
-use Deployer\Ssh\Arguments;
 use Deployer\Task\Context;
 
 set('bundle_name', function () {

@@ -57,7 +57,7 @@ task('release:atomic', [
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
-    'cleanup',
+    'deploy:cleanup',
     'deploy:success'
 ]);
 
@@ -69,7 +69,7 @@ task('release:upgrade', [
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
-    'cleanup',
+    'deploy:cleanup',
     'deploy:success'
 ]);
 
@@ -81,7 +81,7 @@ task('release:backup', [
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
-    'cleanup',
+    'deploy:cleanup',
     'deploy:success'
 ]);
 

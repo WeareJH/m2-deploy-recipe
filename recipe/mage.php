@@ -2,6 +2,8 @@
 
 namespace Deployer;
 
+define('NO_ANSI', true);
+
 require 'recipe/common.php';
 require 'contrib/rsync.php';
 
@@ -65,7 +67,7 @@ task('release:atomic', [
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
-    'cleanup',
+    'deploy:cleanup',
     'deploy:success'
 ]);
 
@@ -78,7 +80,7 @@ task('release:upgrade', [
     'deploy:magento:upgrade',
     'deploy:symlink',
     'deploy:unlock',
-    'cleanup',
+    'deploy:cleanup',
     'deploy:success'
 ]);
 
@@ -91,7 +93,7 @@ task('release:backup', [
     'deploy:magento:backup',
     'deploy:symlink',
     'deploy:unlock',
-    'cleanup',
+    'deploy:cleanup',
     'deploy:success'
 ]);
 
