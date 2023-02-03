@@ -23,3 +23,29 @@ host('server.hostname')
     ->set('keep_releases', 1)
     ->set('deploy_path', '/some/deploy/path')
 ```
+
+### Lighthouse configuration
+
+There is a task that allows you to generate desktop and mobile Google Lighthouse results after running your 
+tasks. The results are sent to a Slack channel. You need to set up a Slack bot integration that is allowed
+to `file:write`
+
+#### Requirements:
+* `lighthouse` CLI tool (`npm install -g lighthouse`)
+* `chromium`
+
+#### Setup:
+
+Add this snippet to your `deploy.php`
+
+```php
+set('lighthouse', (
+    (new LighthouseConfig())->setTargetUrl('https://test-url.com')
+    ->setBasicAuthToken('amg6Y3IfsasagsaagsaDEwbjUtdzByazgwNHQ=') // optional, if your site is protected
+    ->setSlackAuthToken('xoxb-XXXXXXX-XXXXXXXXX-XXXXXXXXXXXXXX') // Slack bot token
+    ->setSlackChannels('XXXXXXX') //Slack channels you want the message sent to, comma-separated
+    ->setProjectSlug('project-name')
+    
+after('deploy:success', 'lighthouse:generate');
+```
+
