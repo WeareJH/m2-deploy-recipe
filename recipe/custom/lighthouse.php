@@ -98,7 +98,7 @@ task('lighthouse:generate', function () {
     --output-path={$lighthouseConfig->getProjectSlug()}-mobile.html {$extraHeaders}");
     runLocally("chromium-browser --no-sandbox --headless --screenshot=\"{$lighthouseConfig->getProjectSlug()}-mobile.png\" \
     \"{$lighthouseConfig->getProjectSlug()}-mobile.html\"");
-    runLocally("curl -F file=@{$lighthouseConfig->getProjectSlug()}-mobile.html \
+    runLocally("curl -F file=@{$lighthouseConfig->getProjectSlug()}-mobile.png \
     -F \"initial_comment=Here are the mobile :iphone: Lighthouse results for your latest deployment :rocket:\" \
     -F channels={$lighthouseConfig->getSlackChannels()} \
     -H \"Authorization: Bearer {$lighthouseConfig->getSlackAuthToken()}\" \
@@ -110,7 +110,7 @@ task('lighthouse:generate', function () {
     --output-path={$lighthouseConfig->getProjectSlug()}-desktop.html {$extraHeaders}");
     runLocally("chromium-browser --no-sandbox --headless --screenshot=\"{$lighthouseConfig->getProjectSlug()}-desktop.png\" \
     \"{$lighthouseConfig->getProjectSlug()}-desktop.html\"");
-    runLocally("curl -F file=@{$lighthouseConfig->getProjectSlug()}-desktop.html \
+    runLocally("curl -F file=@{$lighthouseConfig->getProjectSlug()}-desktop.png \
     -F \"initial_comment=Here are the desktop :computer: Lighthouse results for your latest deployment :rocket:\" \
     -F channels={$lighthouseConfig->getSlackChannels()} \
     -H \"Authorization: Bearer {$lighthouseConfig->getSlackAuthToken()}\" \
