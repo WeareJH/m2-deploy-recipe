@@ -45,7 +45,9 @@ set('lighthouse', (
     ->setSlackAuthToken('xoxb-XXXXXXX-XXXXXXXXX-XXXXXXXXXXXXXX') // Slack bot token
     ->setSlackChannels('XXXXXXX') //Slack channels you want the message sent to, comma-separated
     ->setProjectSlug('project-name')
-    
-after('deploy:success', 'lighthouse:generate');
 ```
 
+and trigger it after your deployment with
+```
+dep lighthouse:generate
+```

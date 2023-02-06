@@ -96,6 +96,8 @@ task('lighthouse:generate', function () {
     runLocally("lighthouse {$lighthouseConfig->getTargetUrl()} --quiet --no-enable-error-reporting \
     --chrome-flags=\"--headless --no-sandbox\" --form-factor=mobile \
     --output-path={$lighthouseConfig->getProjectSlug()}-mobile.html {$extraHeaders}");
+    runLocally("chromium-browser --no-sandbox --headless --screenshot=\"{$lighthouseConfig->getProjectSlug()}-mobile.png\" \
+    \"{$lighthouseConfig->getProjectSlug()}-mobile.html\"");
     runLocally("curl -F file=@{$lighthouseConfig->getProjectSlug()}-mobile.html \
     -F \"initial_comment=Here are the mobile :iphone: Lighthouse results for your latest deployment :rocket:\" \
     -F channels={$lighthouseConfig->getSlackChannels()} \
@@ -106,6 +108,8 @@ task('lighthouse:generate', function () {
     runLocally("lighthouse {$lighthouseConfig->getTargetUrl()} --quiet --no-enable-error-reporting \
     --chrome-flags=\"--headless --no-sandbox\" --form-factor=desktop  --screenEmulation.disabled \
     --output-path={$lighthouseConfig->getProjectSlug()}-desktop.html {$extraHeaders}");
+    runLocally("chromium-browser --no-sandbox --headless --screenshot=\"{$lighthouseConfig->getProjectSlug()}-desktop.png\" \
+    \"{$lighthouseConfig->getProjectSlug()}-desktop.html\"");
     runLocally("curl -F file=@{$lighthouseConfig->getProjectSlug()}-desktop.html \
     -F \"initial_comment=Here are the desktop :computer: Lighthouse results for your latest deployment :rocket:\" \
     -F channels={$lighthouseConfig->getSlackChannels()} \
