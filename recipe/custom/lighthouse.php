@@ -9,6 +9,7 @@ class LighthouseConfig
     private $slackAuthToken = '';
     private $slackChannels = '';
     private $projectSlug = '';
+    private $lighthouseBin = 'lighthouse';
 
     public function getTargetUrl(): string
     {
@@ -65,11 +66,22 @@ class LighthouseConfig
         return $this;
     }
 
+    public function getLighthouseBin(): string
+    {
+        return $this->lighthouseBin;
+    }
+
+    public function setLighthouseBin(string $lighthouseBin): void
+    {
+        $this->lighthouseBin = $lighthouseBin;
+    }
+
     public function validate(): bool
     {
         return $this->slackAuthToken !== '' 
             && $this->slackChannels !== '' 
             && $this->targetUrl !== '' 
+            && $this->lighthouseBin !== ''
             && $this->projectSlug !== '';
     }
 }
@@ -93,7 +105,7 @@ task('lighthouse:generate', function () {
     runLocally("curl {$lighthouseConfig->getTargetUrl()} {$curlBasicAuth} > /dev/null");
 
     // Generate results for mobile and push to Slack
-    runLocally("lighthouse {$lighthouseConfig->getTargetUrl()} --quiet --no-enable-error-reporting \
+    runLocally("{$lighthouseConfig->getLighthouseBin()} {$lighthouseConfig->getTargetUrl()} --quiet --no-enable-error-reporting \
     --chrome-flags=\"--headless --no-sandbox\" --form-factor=mobile \
     --output-path={$lighthouseConfig->getProjectSlug()}-mobile.html {$extraHeaders}");
     runLocally("chromium-browser --no-sandbox --headless --screenshot=\"{$lighthouseConfig->getProjectSlug()}-mobile.png\" \
@@ -105,7 +117,7 @@ task('lighthouse:generate', function () {
     https://slack.com/api/files.upload");
 
     // Generate results for desktop and push to Slack
-    runLocally("lighthouse {$lighthouseConfig->getTargetUrl()} --quiet --no-enable-error-reporting \
+    runLocally("{$lighthouseConfig->getLighthouseBin()} {$lighthouseConfig->getTargetUrl()} --quiet --no-enable-error-reporting \
     --chrome-flags=\"--headless --no-sandbox\" --form-factor=desktop  --screenEmulation.disabled \
     --output-path={$lighthouseConfig->getProjectSlug()}-desktop.html {$extraHeaders}");
     runLocally("chromium-browser --no-sandbox --headless --screenshot=\"{$lighthouseConfig->getProjectSlug()}-desktop.png\" \
