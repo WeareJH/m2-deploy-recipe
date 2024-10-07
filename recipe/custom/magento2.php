@@ -20,7 +20,7 @@ task('magento:local:setup:static-content:deploy', function () {
 
 desc('Local DI compile');
 task('magento:local:setup:di:compile', function () {
-    runLocally('{{local_bin/php}} {{local_src}}/bin/magento setup:di:compile');
+    runLocally('{{local_bin/php}} {{local_src}}/bin/magento setup:di:compile && {{local_bin/composer}} dump-autoload -o --apcu');
 });
 
 // Remote commands
