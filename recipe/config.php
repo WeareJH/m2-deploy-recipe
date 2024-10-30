@@ -47,6 +47,8 @@ set('build_exclusions', [
     './*.md',
     './auth.json',
     './dev',
+    './update',
+    './setup',
     './phpserver',
     './LICENSE*.txt',
     './COPYING.txt',
