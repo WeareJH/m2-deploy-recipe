@@ -9,10 +9,6 @@ namespace Deployer;
 
 use function Deployer\Support\str_contains;
 
-if (Deployer::get()->tasks->has('deploy:prepare')) {
-    Deployer::get()->tasks->remove('deploy:prepare');
-}
-
 desc('Preparing host for deploy');
 task('deploy:prepare', function () {
     // Check if shell is POSIX-compliant
