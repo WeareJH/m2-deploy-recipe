@@ -9,7 +9,11 @@ namespace Deployer;
 
 use function Deployer\Support\str_contains;
 
-Deployer::get()->tasks->remove('deploy:prepare');
+try {
+    Deployer::get()->tasks->remove('deploy:prepare');
+} catch (\InvalidArgumentException $e) {
+    // task didn't exist; ignore
+}
 
 desc('Preparing host for deploy');
 task('deploy:prepare', function () {
