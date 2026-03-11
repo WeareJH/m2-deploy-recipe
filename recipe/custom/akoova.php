@@ -2,29 +2,40 @@
 
 namespace Deployer;
 
-use Deployer\Task\Context;
+set('deploy_status_wait', 180);
 
-task('akoova:zip:upload', function () {
-    $server = Context::get()->getHost();
-    $sshUser = $server->getRemoteUser();
-    $hostName = $server->getHostname();
-    $sshPort = $server->getPort();
-    $serverArgs = (array) $server->getSshArguments();
+desc('Deploy release to Akoova server');
+task('akoova', [
+    'akoova:upload',
+    'akoova:trigger:deploy',
+    'akoova:deploy:status',
+    'deploy:success',
+]);
 
-    $arguments = $server->getSshMultiplexing()
-        ? '-o ControlPath=' . $server->getSshControlPath()
+task('akoova:upload', function () {
+    $host = currentHost();
+    $sshUser = $host->getRemoteUser();
+    $hostName = $host->getHostname();
+    $sshPort = $host->getPort() ?: 22;
+    $serverArgs = $host->getSshArguments() ? (array) $host->getSshArguments() : [];
+
+    $arguments = $host->getSshMultiplexing()
+        ? '-o ControlPath=' . $host->getSshControlPath()
         : '';
 
-    foreach ($serverArgs as $serverArg) {
-        $arguments .= sprintf(' %s', $serverArg);
+    foreach ($serverArgs as $arg) {
+        $arguments .= " $arg";
     }
 
-    runLocally("scp -P $sshPort $arguments {{zip_path}} $sshUser@$hostName:{{deploy_path}}");
+    $artifactPath = get('artifact_path');
+    $artifactFile = get('artifact_file');
+    runLocally("scp -P $sshPort $arguments $artifactPath $sshUser@$hostName:{{deploy_path}}/$artifactFile");
 });
 
 desc('Touch file to start deployment on Akoova');
 task('akoova:trigger:deploy', function () {
-    run('touch {{ deploy_path }}/deploy-{{ bundle_name }}');
+    $artifactFile = get('artifact_file');
+    run("touch {{deploy_path}}/deploy-$artifactFile");
 });
 
 desc('Touch file to start rollback on Akoova');
@@ -36,23 +47,21 @@ task('akoova:trigger:rollback', function () {
     }
 
     $rollbackTag = input()->getOption('tag');
-    run('touch {{ deploy_path }}/rollback-' . $rollbackTag);
+    run('touch {{deploy_path}}/rollback-' . $rollbackTag);
 });
-
-set('deploy_status_wait', 180);
 
 desc('Poll for deployment status');
 task('akoova:deploy:status', function () {
     $wait = get('deploy_status_wait');
+    $artifactFile = get('artifact_file');
     $time = time();
 
     while (time() - $time < $wait) {
-        // Checks for the removal of deploy trigger
-        if (test('[ ! -f {{ deploy_path }}/deploy-{{ bundle_name }} ]')) {
+        if (test("[ ! -f {{deploy_path}}/deploy-$artifactFile ]")) {
             return true;
         }
         sleep(10);
     }
 
-    throw new \RuntimeException('Gave up waiting after "'. $wait .' seconds"  - presumed failed.');
+    throw new \RuntimeException('Gave up waiting after "' . $wait . ' seconds" - presumed failed.');
 });

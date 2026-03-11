@@ -1,11 +1,14 @@
 {
     "name": "wearejh/m2-deploy-recipe",
-    "description": "Deployer Recipe for Magento 2",
+    "description": "Deployer Recipe for Magento 2 (JH extensions for deployer 8.x)",
     "type": "library",
     "license": "MIT",
     "require": {
-        "deployer/deployer": "dev-master#70e27b4219655f55b6f81cf17582dac13a54647f"
+        "php": ">=8.4",
+        "deployer/deployer": "^8.0"
     },
+    "minimum-stability": "RC",
+    "prefer-stable": true,
     "autoload": {
         "files": [
             "autoload.php"
