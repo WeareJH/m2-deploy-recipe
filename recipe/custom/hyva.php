@@ -22,7 +22,7 @@ task('hyva:deploy', function () {
     foreach ($themes as $theme) {
         $dir = "app/design/frontend/$theme/web/tailwind";
         if (test("[ -f $dir/package.json ]")) {
-            run("cd $dir && npm ci && npm run build-prod");
+            run("cd $dir && npm ci && npm run build");
         } else {
             writeln("<comment>Skipping $theme — no package.json found</comment>");
         }
