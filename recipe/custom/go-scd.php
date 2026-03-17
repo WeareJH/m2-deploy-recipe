@@ -31,7 +31,7 @@ task('go:deploy:assets', function () {
     }
 
     run(
-        '{{bin/static-deploy}} -f --content-version={{content_version}} '
+        '{{bin/static-deploy}} -f -a frontend -a adminhtml --content-version={{content_version}} '
         . "$options $locales " . trim($themesToCompile) . " -j $jobs"
     );
 });
