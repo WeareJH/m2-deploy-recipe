@@ -7,6 +7,12 @@ namespace Deployer;
 // https://github.com/deployphp/deployer/blob/go:master/recipe/magento2.php
 require 'recipe/magento2.php';
 
+// Override default artifact filename with git hash for meaningful filenames
+set('artifact_file', function () {
+    $hash = runLocally('git rev-parse --short HEAD');
+    return "$hash.tar.gz";
+});
+
 // JH custom recipes
 require __DIR__ . '/custom/akoova.php';
 require __DIR__ . '/custom/hyva.php';
