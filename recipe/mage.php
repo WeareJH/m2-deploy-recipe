@@ -18,4 +18,7 @@ require __DIR__ . '/custom/akoova.php';
 require __DIR__ . '/custom/hyva.php';
 require __DIR__ . '/custom/go-scd.php';
 
+// Sonassi/Akoova handle OPcache purge via their own mechanisms
+task('cachetool:clear:opcache')->disable();
+
 after('deploy:failed', 'deploy:unlock');
