@@ -1,7 +1,6 @@
---- a/src/Executor/Server.php
-+++ b/src/Executor/Server.php
-@@ -122,9 +122,6 @@
-     private function acceptNewConnections(): void
+--- a/src/Executor/Server.php	2026-03-20 13:59:43
++++ b/src/Executor/Server.php	2026-03-20 14:00:51
+@@ -123,9 +123,6 @@
      {
          $newClientSocket = @stream_socket_accept($this->socket, 0);
          if ($newClientSocket) {
@@ -11,14 +10,14 @@
              $this->clientSockets[] = $newClientSocket;
          }
      }
-@@ -149,7 +146,27 @@
-
+@@ -149,8 +146,29 @@
+ 
      private function readClientRequest($clientSocket)
      {
 -        $request = stream_get_contents($clientSocket);
-+        // Read headers line by line until we hit the empty line (\r\n\r\n).
++        // Read headers line by line until we hit the empty line.
 +        // We intentionally leave the socket in blocking mode (the default)
-+        // so that fgets() waits for a complete line — this avoids the
++        // so that fgets() waits for a complete line, avoiding the
 +        // "Malformed request line" race that occurs with non-blocking reads.
 +        $headers = '';
 +        $contentLength = 0;
@@ -31,13 +30,14 @@
 +                break;
 +            }
 +        }
-+
+ 
 +        $body = '';
 +        if ($contentLength > 0) {
 +            $body = stream_get_contents($clientSocket, $contentLength);
 +        }
 +
 +        $request = $headers . $body;
-
++
          if ($request === false) {
              throw new Exception('Socket read failed');
+         }
