@@ -1,0 +1,10 @@
+--- a/src/Executor/Server.php
++++ b/src/Executor/Server.php
+@@ -149,6 +149,7 @@
+
+     private function readClientRequest($clientSocket)
+     {
++        stream_set_blocking($clientSocket, true);
+         $request = stream_get_contents($clientSocket);
+
+         if ($request === false) {
