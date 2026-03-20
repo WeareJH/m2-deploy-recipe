@@ -18,7 +18,7 @@
     "extra": {
         "patches": {
             "deployer/deployer": {
-                "Fix Malformed request line race condition (non-blocking socket read)": "patches/deployer-fix-malformed-request.patch"
+                "Fix Malformed request line race condition (non-blocking socket read)": "https://raw.githubusercontent.com/WeareJH/m2-deploy-recipe/v3/patches/deployer-fix-malformed-request.patch"
             }
         }
     },
