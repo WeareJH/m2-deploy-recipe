@@ -5,7 +5,6 @@
     "license": "MIT",
     "require": {
         "php": ">=8.4",
-        "cweagans/composer-patches": "^2.0",
         "deployer/deployer": "^8.0"
     },
     "minimum-stability": "RC",
@@ -14,18 +13,5 @@
         "files": [
             "autoload.php"
         ]
-    },
-    "extra": {
-        "patches": {
-            "deployer/deployer": {
-                "Fix Malformed request line race condition (non-blocking socket read)": "https://raw.githubusercontent.com/WeareJH/m2-deploy-recipe/v3/patches/deployer-fix-malformed-request.patch"
-            }
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "cweagans/composer-patches": true,
-            "cweagans/composer-configurable-plugin": true
-        }
     }
 }
