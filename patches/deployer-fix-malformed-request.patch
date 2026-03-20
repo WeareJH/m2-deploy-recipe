@@ -1,10 +1,43 @@
 --- a/src/Executor/Server.php
 +++ b/src/Executor/Server.php
-@@ -149,6 +149,7 @@
+@@ -122,9 +122,6 @@
+     private function acceptNewConnections(): void
+     {
+         $newClientSocket = @stream_socket_accept($this->socket, 0);
+         if ($newClientSocket) {
+-            if (!stream_set_blocking($newClientSocket, false)) {
+-                throw new Exception("Failed to set client socket to non-blocking mode");
+-            }
+             $this->clientSockets[] = $newClientSocket;
+         }
+     }
+@@ -149,7 +146,27 @@
 
      private function readClientRequest($clientSocket)
      {
-+        stream_set_blocking($clientSocket, true);
-         $request = stream_get_contents($clientSocket);
+-        $request = stream_get_contents($clientSocket);
++        // Read headers line by line until we hit the empty line (\r\n\r\n).
++        // We intentionally leave the socket in blocking mode (the default)
++        // so that fgets() waits for a complete line — this avoids the
++        // "Malformed request line" race that occurs with non-blocking reads.
++        $headers = '';
++        $contentLength = 0;
++        while (($line = fgets($clientSocket)) !== false) {
++            $headers .= $line;
++            if (str_starts_with($line, 'Content-Length:')) {
++                $contentLength = (int) trim(substr($line, 15));
++            }
++            if ($line === "\r\n") {
++                break;
++            }
++        }
++
++        $body = '';
++        if ($contentLength > 0) {
++            $body = stream_get_contents($clientSocket, $contentLength);
++        }
++
++        $request = $headers . $body;
 
          if ($request === false) {
+             throw new Exception('Socket read failed');
