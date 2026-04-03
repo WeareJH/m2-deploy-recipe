@@ -7,8 +7,6 @@
 
 namespace Deployer;
 
-use function Deployer\Support\str_contains;
-
 try {
     Deployer::get()->tasks->remove('deploy:prepare');
 } catch (\InvalidArgumentException $e) {
